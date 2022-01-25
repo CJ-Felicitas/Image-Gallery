@@ -10,3 +10,4 @@
 ## Note 
 - credits to w3school for upload script
 - upload form has no design
+- two pages
