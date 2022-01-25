@@ -31,48 +31,31 @@
 
     $sql_query = "SELECT * FROM imageGallery;";
     $result = mysqli_query($connection, $sql_query);
+    $number_of_rows = mysqli_num_rows($result);
 
 
-    function createGallery($result_inner){
-        $column_count = 0;
+    function createGallery($result_inner)
+    {
+       
+        echo '<div class="row">';
         while ($row = mysqli_fetch_assoc($result_inner)) {
             $image_dir = $row['dir'];
 
-            if ($column_count ==0) {
-                $column_count = $column_count +1;
-                echo '<div class = row>';
-            }
-
-            if ($column_count!=0 || $column_count!=3) {
-                $column_count = $column_count +1;
-                echo ' <div class="col-md-4">
-                <div class="thumbnail">
-                <img src= "'.$image_dir.'" style = "width:100%; height:300px;>
-                </div>
-                </div>';
-            }
-
-            if ($column_count ==3) {
-                $column_count = 0;
-                echo '
-                </div>
-                <div class="row">
-                <div class="col-md-4">
-                <div class="thumbnail">
-                <img src= "'.$image_dir.'"style="width:100%; height:300px; >
-                </div>
-                </div></div>';
-            }
-
+            echo ' <div class="col-md-4">
+            <div class="thumbnail">
+            <img src= "' . $image_dir . '"style="width:100%; height:300px;">
+            </div>
+            </div>';
         }
+        echo '</div>';
     }
 
-    
+
     ?>
     <div class="container">
-  <?php
-    createGallery($result);
-    ?>
+        <?php
+        createGallery($result);
+        ?>
     </div>
 
     </div>
