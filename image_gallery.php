@@ -32,76 +32,47 @@
     $sql_query = "SELECT * FROM imageGallery;";
     $result = mysqli_query($connection, $sql_query);
 
-    function create_imageColumnByThree($result_in)
-    {
-        $result = $result_in;
-        $counter = 0; // counts the loop up to 3 to divide the thumbnail into 3 columns per row
-        while ($row = mysqli_fetch_assoc($result)) {
-            $image_dir = strtolower($row['dir']);
-            if ($counter == 0) {
-                echo "<div class='row'>";
-            }
-            if ($counter <= 3 && $counter >= 0) {
 
-                $html_first_col_tag = '<div class="row"><div class="thumbnail"><img href = "';   //></div></div>'
-                $sumpay = $image_dir + '"></div></div>';
+    function createGallery($result_inner){
+        $column_count = 0;
+        while ($row = mysqli_fetch_assoc($result_inner)) {
+            $image_dir = $row['dir'];
 
-                $overall = $html_first_col_tag + $sumpay;
-                echo $overall;
-
-                $counter++;
+            if ($column_count ==0) {
+                $column_count = $column_count +1;
+                echo '<div class = row>';
             }
 
-            if ($counter = 3) {
-                /* echo '
-        </div>
-        <div class="row">
-        <div class="col-md-4">
-        <div class="thumbnail">
-        <img href="' + "$image_dir" + '"' + 'style="width:100%; height:300px;">
-        </div>
-        </div></div>';
-                */
-
-                $htmls = "
+            if ($column_count!=0 || $column_count!=3) {
+                $column_count = $column_count +1;
+                echo ' <div class="col-md-4">
+                <div class="thumbnail">
+                <img src= "'.$image_dir.'" style = "width:100%; height:300px;>
                 </div>
-                <div class = 'row'>
-                <div class = 'col-md-4'>
-                <div class='thumbnail'>
-                <img href = '"+$image_dir +" style='width:100%; height:300px;'>
-                </div>
-                </div></div>";
+                </div>';
+            }
 
-
-                $html_tag_two =
-                    '
+            if ($column_count ==3) {
+                $column_count = 0;
+                echo '
                 </div>
                 <div class="row">
                 <div class="col-md-4">
                 <div class="thumbnail">
-                
-                <img href="' + "$image_dir" + '"' + 'style="width:100%; height:300px;">
+                <img src= "'.$image_dir.'"style="width:100%; height:300px; >
                 </div>
                 </div></div>';
-                echo $htmls;
-
-                $counter = 0;
             }
-        }
 
-        if ($counter != 3) {
-            echo '</div>';
         }
     }
 
-
+    
     ?>
     <div class="container">
-        <?php
-
-        create_imageColumnByThree($result);
-
-        ?>
+  <?php
+    createGallery($result);
+    ?>
     </div>
 
     </div>
